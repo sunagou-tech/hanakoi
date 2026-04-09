@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>特定商取引法に基づく表記｜花恋リスタート</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-main: #e85b8a;
+    --pink-light: #f5a5c3;
+    --pink-pale: #fde8f0;
+    --pink-deep: #c94070;
+    --text-dark: #2d1f2e;
+    --text-mid: #5a4460;
+    --text-light: #9b8a9e;
+    --bg: #faf7f8;
+    --border: #f0dde6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #f5a5c3 0%, #e85b8a 50%, #c94070 100%);
+    text-align: center;
+    padding: 32px 20px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .logo-text {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  header h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.15em;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.1em;
+    position: relative;
+  }
+
+  /* MAIN */
+  .container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px 60px;
+  }
+
+  /* TABLE */
+  .legal-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(232,91,138,0.08);
+    border: 1px solid var(--border);
+  }
+  .legal-table tr {
+    border-bottom: 1px solid var(--border);
+  }
+  .legal-table tr:last-child {
+    border-bottom: none;
+  }
+  .legal-table th {
+    width: 180px;
+    padding: 18px 20px;
+    background: var(--pink-pale);
+    color: var(--pink-deep);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+  .legal-table td {
+    padding: 18px 20px;
+    color: var(--text-dark);
+    font-size: 13px;
+    line-height: 1.8;
+    vertical-align: top;
+  }
+  .legal-table td a {
+    color: var(--pink-main);
+    text-decoration: underline;
+  }
+  .legal-table td ul {
+    list-style: none;
+    margin-top: 4px;
+  }
+  .legal-table td ul li {
+    padding: 3px 0 3px 14px;
+    position: relative;
+    color: var(--text-mid);
+  }
+  .legal-table td ul li::before {
+    content: '・';
+    position: absolute;
+    left: 0;
+    color: var(--pink-light);
+  }
+  .legal-table td .sub-title {
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-top: 10px;
+    margin-bottom: 4px;
+    display: block;
+  }
+  .legal-table td .sub-title:first-child {
+    margin-top: 0;
+  }
+
+  /* BACK LINK */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--pink-main);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    padding: 8px 16px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .back-link:hover {
+    background: var(--pink-pale);
+    border-color: var(--pink-light);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--text-dark);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    font-size: 11px;
+    padding: 20px;
+  }
+  footer a { color: rgba(255,255,255,0.5); text-decoration: underline; margin: 0 8px; }
+
+  @media (max-width: 600px) {
+    .legal-table th { width: 120px; font-size: 12px; padding: 14px 12px; white-space: normal; }
+    .legal-table td { padding: 14px 12px; font-size: 12px; }
+    header h1 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo-text">🌸 花恋リスタート</span>
+  <h1>特定商取引法に基づく表記</h1>
+  <div class="header-sub">LEGAL NOTICE</div>
+</header>
+
+<div class="container">
+  <a class="back-link" href="index.html">← お申込みページに戻る</a>
+
+  <table class="legal-table">
+    <tr>
+      <th>販売業者</th>
+      <td>一般社団法人 SelfLove Academy</td>
+    </tr>
+    <tr>
+      <th>代表取締役</th>
+      <td>朝日奈 花</td>
+    </tr>
+    <tr>
+      <th>所在地</th>
+      <td>〒107-0062<br>東京都港区南青山2-2-15<br>ウィン青山 5階</td>
+    </tr>
+    <tr>
+      <th>メールアドレス</th>
+      <td><script>document.write('mail'+'@'+'hanakoi-restart.com')</script></td>
+    </tr>
+    <tr>
+      <th>事業内容</th>
+      <td>恋愛および復縁に関するカウンセリングサービスの提供、ならびにオンライン講座・プログラムの企画、制作および販売</td>
+    </tr>
+    <tr>
+      <th>販売価格</th>
+      <td>
+        <ul>
+          <li>ベーシックプラン：298,000円（税込）</li>
+          <li>マスタープラン：498,000円（税込）</li>
+          <li>プレミアムプラン：698,000円（税込）</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <th>お支払い方法</th>
+      <td>クレジットカード決済 / 銀行振込</td>
+    </tr>
+    <tr>
+      <th>お支払い期限</th>
+      <td>
+        <span class="sub-title">【クレジットカード】</span>
+        <ul>
+          <li>各クレジットカード会社の規約に基づく</li>
+          <li>分割でご決済される場合、分割手数料が発生致します。あらかじめご了承下さいませ。</li>
+          <li>海外のクレジットカードはご利用できかねます。</li>
+        </ul>
+        <span class="sub-title">【銀行振込】</span>
+        <ul>
+          <li>お申し込みから３日以内にお振込下さい。</li>
+          <li>お振込手数料はお客様負担となります。</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <th>お届け方法</th>
+      <td>
+        <ul>
+          <li>代金決済完了後、３営業日以内にメールもしくはLINEにてご案内させていただきます。（ご案内が届かない場合には、こちら宛てにご連絡をお願いいたします）</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <th>返品・返金</th>
+      <td>インターネットによる通信販売では、特定商取引法に定められたクーリングオフの対象外となりますので、原則として返金に応じられません。</td>
+    </tr>
+    <tr>
+      <th>表現、及び商品に関する注意書き</th>
+      <td>本商品に示された表現や再現性には個人差があり、必ずしも利益や効果を保証したものではございません。</td>
+    </tr>
+    <tr>
+      <th>プライバシーの保証</th>
+      <td>
+        当社はお客様のプライバシーを第一に考えて運営を致しております。<br>
+        お客様の個人情報は、厳正な管理下で安全に蓄積・保管しております。<br>
+        当該個人情報は法律によって要求された場合、あるいは当社の権利・財産を保護が必要な場合を除き、第三者に提供することはございません。
+      </td>
+    </tr>
+  </table>
+</div>
+
+<footer>
+  <a href="index.html">お申込みページ</a>
+  <a href="legal-toku.html">特定商取引法に基づく表記</a>
+  <a href="kojin-joho.html">個人情報保護方針</a>
+  <a href="privacy.html">プライバシーポリシー</a><br><br>
+  Copyright © 花恋リスタート All Rights Reserved.
+</footer>
+
+</body>
+</html>
