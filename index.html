@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>花恋リスタート｜プラン選択・お申込み</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-main: #e85b8a;
+    --pink-light: #f5a5c3;
+    --pink-pale: #fde8f0;
+    --pink-deep: #c94070;
+    --text-dark: #2d1f2e;
+    --text-mid: #5a4460;
+    --text-light: #9b8a9e;
+    --bg: #faf7f8;
+    --border: #f0dde6;
+    --premium: #e85b8a;
+    --premium-deep: #c94070;
+    --master: #9b59b6;
+    --master-deep: #6c3483;
+    --basic: #e07060;
+    --basic-deep: #c0392b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #f5a5c3 0%, #e85b8a 50%, #c94070 100%);
+    text-align: center;
+    padding: 32px 20px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .logo-text { font-family:'Noto Serif JP',serif; font-size:13px; color:rgba(255,255,255,.9); letter-spacing:.1em; display:block; margin-bottom:8px; }
+  header h1 { font-family:'Noto Serif JP',serif; font-size:28px; font-weight:700; color:#fff; letter-spacing:.12em; text-shadow:0 2px 8px rgba(0,0,0,.2); margin-bottom:8px; position:relative; }
+  .header-sub { font-size:13px; color:rgba(255,255,255,.85); letter-spacing:.2em; font-family:'Noto Serif JP',serif; margin-bottom:20px; }
+
+  /* JUMP NAV */
+  .jump-nav { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; position:relative; }
+  .jump-btn { padding:9px 22px; border-radius:24px; font-size:13px; font-weight:700; color:#fff; border:2px solid rgba(255,255,255,.5); background:rgba(255,255,255,.15); cursor:pointer; font-family:'Noto Sans JP',sans-serif; transition:all .2s; text-decoration:none; backdrop-filter:blur(4px); }
+  .jump-btn:hover { background:rgba(255,255,255,.3); border-color:#fff; }
+  .jump-btn .ps { font-size:11px; font-weight:400; opacity:.85; margin-left:4px; }
+
+  /* PLAN SECTIONS */
+  .plan-section { border-top:6px solid var(--premium); }
+  .plan-section.master { border-color:var(--master); }
+  .plan-section.basic { border-color:var(--basic); }
+
+  .plan-banner { background:linear-gradient(135deg,var(--premium),var(--premium-deep)); text-align:center; padding:20px; color:#fff; }
+  .plan-section.master .plan-banner { background:linear-gradient(135deg,var(--master),var(--master-deep)); }
+  .plan-section.basic .plan-banner { background:linear-gradient(135deg,var(--basic),var(--basic-deep)); }
+  .plan-banner-label { font-size:12px; opacity:.85; letter-spacing:.15em; margin-bottom:4px; }
+  .plan-banner-name { font-family:'Noto Serif JP',serif; font-size:22px; font-weight:700; letter-spacing:.1em; }
+  .rec-pill { display:inline-block; background:#f0c040; color:#5a3a00; font-size:11px; font-weight:700; padding:2px 10px; border-radius:12px; margin-left:8px; vertical-align:middle; }
+
+  .plan-inner { display:grid; grid-template-columns:1fr 290px; gap:24px; max-width:1000px; margin:0 auto; padding:24px 16px 40px; align-items:start; }
+
+  /* SECTION TITLE */
+  .section-title { font-family:'Noto Serif JP',serif; font-size:15px; font-weight:700; color:var(--text-dark); border-left:4px solid var(--premium); padding-left:10px; margin:26px 0 14px; }
+  .section-title:first-child { margin-top:0; }
+  .plan-section.master .section-title { border-color:var(--master); }
+  .plan-section.basic .section-title { border-color:var(--basic); }
+
+  /* COURSE BLOCK */
+  .course-block { background:#fff; border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:10px; display:flex; gap:12px; align-items:flex-start; }
+  .course-icon { width:56px; height:56px; border-radius:8px; background:linear-gradient(135deg,var(--pink-pale),#f5d0e0); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+  .plan-section.master .course-icon { background:linear-gradient(135deg,#f0e8f8,#e0c8f0); }
+  .plan-section.basic .course-icon { background:linear-gradient(135deg,#fde8e0,#f8c8c0); }
+  .course-info { flex:1; }
+  .course-tag { display:inline-block; background:var(--premium); color:#fff; font-size:9px; padding:2px 7px; border-radius:8px; margin-bottom:5px; font-weight:600; }
+  .course-tag.new { background:#e87050; }
+  .course-tag.pop { background:#8b5e8b; }
+  .plan-section.master .course-tag:not(.new):not(.pop) { background:var(--master); }
+  .plan-section.basic .course-tag:not(.new):not(.pop) { background:var(--basic); }
+  .course-title { font-size:13px; font-weight:700; color:var(--text-dark); margin-bottom:7px; line-height:1.4; }
+  .course-items { list-style:none; }
+  .course-items li { font-size:12px; color:var(--text-mid); padding:3px 0 3px 12px; position:relative; border-bottom:1px dashed #f0e4ea; display:flex; justify-content:space-between; align-items:center; }
+  .course-items li:last-child { border-bottom:none; }
+  .course-items li::before { content:'・'; position:absolute; left:0; color:var(--pink-light); }
+  .ib { font-size:9px; padding:1px 6px; border-radius:7px; white-space:nowrap; flex-shrink:0; margin-left:6px; }
+  .ib.v { background:#e8f0ff; color:#4a6bc7; }
+  .ib.t { background:var(--pink-pale); color:var(--pink-main); }
+  .ib.lv { background:#fff0e8; color:#c77050; }
+  .ib.ex { background:#fff0f5; color:var(--premium-deep); font-weight:700; }
+  .ib.exm { background:#f5eeff; color:var(--master-deep); font-weight:700; }
+
+  /* BENEFIT */
+  .benefit-card { background:#fff; border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin-bottom:8px; display:flex; align-items:center; gap:12px; }
+  .bn { width:32px; height:32px; background:linear-gradient(135deg,var(--premium),var(--premium-deep)); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+  .plan-section.master .bn { background:linear-gradient(135deg,var(--master),var(--master-deep)); }
+  .plan-section.basic .bn { background:linear-gradient(135deg,var(--basic),var(--basic-deep)); }
+  .be { font-size:22px; flex-shrink:0; }
+  .bt { font-size:12px; font-weight:700; color:var(--text-dark); }
+  .bnt { font-size:11px; color:var(--text-light); margin-top:2px; }
+
+  /* SUPPORT */
+  .support-card { background:#fff; border:1px solid var(--border); border-radius:10px; padding:13px 16px; margin-bottom:8px; display:flex; align-items:center; gap:12px; }
+  .si { font-size:22px; flex-shrink:0; }
+  .st { font-size:12px; font-weight:700; color:var(--text-dark); }
+  .sd { font-size:11px; color:var(--text-light); margin-top:2px; }
+
+  /* ORDER BOX */
+  .order-box-wrap { position:sticky; top:16px; }
+  .order-box { background:#fff; border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 4px 24px rgba(232,91,138,.12); }
+  .obh { background:linear-gradient(135deg,var(--premium),var(--premium-deep)); padding:14px 18px; color:#fff; text-align:center; }
+  .plan-section.master .obh { background:linear-gradient(135deg,var(--master),var(--master-deep)); }
+  .plan-section.basic .obh { background:linear-gradient(135deg,var(--basic),var(--basic-deep)); }
+  .obl { font-size:11px; opacity:.85; letter-spacing:.15em; margin-bottom:2px; }
+  .obn { font-family:'Noto Serif JP',serif; font-size:16px; font-weight:700; }
+  .obb { padding:14px 16px; }
+  .pr { display:flex; justify-content:space-between; align-items:center; padding:7px 0; border-bottom:1px solid var(--border); font-size:12px; }
+  .pr:last-of-type { border-bottom:none; }
+  .prl { color:var(--text-mid); }
+  .pro { color:var(--text-light); text-decoration:line-through; font-size:11px; }
+  .prd { color:#e05050; font-weight:700; }
+  .prf { font-size:20px; font-weight:700; color:var(--premium-deep); }
+  .plan-section.master .prf { color:var(--master-deep); }
+  .plan-section.basic .prf { color:var(--basic-deep); }
+  .prf small { font-size:11px; font-weight:400; color:var(--text-mid); }
+  .btn-cc { display:block; width:100%; padding:12px; background:linear-gradient(135deg,#5cb85c,#3d9a3d); color:#fff; text-align:center; border:none; border-radius:7px; font-size:13px; font-weight:700; font-family:'Noto Sans JP',sans-serif; cursor:pointer; margin:12px 0 7px; text-decoration:none; transition:all .2s; }
+  .btn-cc:hover { background:linear-gradient(135deg,#4caa4c,#2d8a2d); transform:translateY(-1px); }
+  .btn-bk { display:block; width:100%; padding:12px; background:linear-gradient(135deg,#3a7bd5,#2260b0); color:#fff; text-align:center; border:none; border-radius:7px; font-size:13px; font-weight:700; font-family:'Noto Sans JP',sans-serif; cursor:pointer; margin-bottom:12px; text-decoration:none; transition:all .2s; }
+  .btn-bk:hover { background:linear-gradient(135deg,#2a6bc5,#1750a0); transform:translateY(-1px); }
+  .onote { font-size:11px; color:var(--text-light); line-height:1.6; background:var(--pink-pale); border-radius:7px; padding:9px 11px; margin-bottom:11px; }
+  .cbox { border:1px solid var(--border); border-radius:7px; padding:10px 12px; }
+  .ctit { font-size:11px; font-weight:700; color:var(--text-mid); margin-bottom:6px; text-align:center; background:var(--bg); padding:3px; border-radius:4px; }
+  .crow { display:flex; gap:6px; font-size:11px; color:var(--text-mid); margin-bottom:3px; }
+  .crow span:first-child { color:var(--text-light); flex-shrink:0; }
+  .chrs { font-size:10px; color:var(--text-light); border-top:1px solid var(--border); margin-top:5px; padding-top:5px; }
+
+  /* DIVIDER */
+  .plan-divider { height:32px; background:var(--bg); display:flex; align-items:center; justify-content:center; }
+  .plan-divider::before { content:''; display:block; width:60px; height:3px; background:linear-gradient(90deg,var(--pink-light),var(--pink-main),var(--pink-light)); border-radius:2px; }
+
+  footer { background:var(--text-dark); color:rgba(255,255,255,.5); text-align:center; font-size:11px; padding:20px; margin-top:40px; }
+  footer a { color:rgba(255,255,255,.5); text-decoration:underline; }
+
+  @media(max-width:768px){
+    .plan-inner { grid-template-columns:1fr; }
+    .order-box-wrap { position:static; }
+    header h1 { font-size:22px; }
+    .jump-btn { font-size:12px; padding:7px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo-text">🌸 花恋リスタート</span>
+  <h1>花恋リスタート</h1>
+  <div class="header-sub">— プラン選択・お申込み —</div>
+  <div class="jump-nav">
+    <a class="jump-btn" href="#premium">プレミアムプラン<span class="ps">¥598,000</span></a>
+    <a class="jump-btn" href="#master">マスタープラン<span class="ps">¥498,000</span></a>
+    <a class="jump-btn" href="#basic">ベーシックプラン<span class="ps">¥298,000</span></a>
+  </div>
+</header>
+
+
+<!-- ============ PREMIUM ============ -->
+<section class="plan-section premium" id="premium">
+  <div class="plan-banner">
+    <div class="plan-banner-label">花恋リスタート</div>
+    <div class="plan-banner-name">プレミアムプラン</div>
+  </div>
+  <div class="plan-inner">
+    <div>
+      <div class="section-title">メインコンテンツ</div>
+
+      <div class="course-block"><div class="course-icon">💌</div><div class="course-info">
+        <span class="course-tag new">NEW</span>
+        <div class="course-title">彼がうまくいく私のトツゼツ完成講座</div>
+        <ul class="course-items">
+          <li>彼眺めロードマップ<span class="ib v">動画</span></li>
+          <li>お目付の家庭克明なリフレッシュプレート<span class="ib t">テキスト</span></li>
+          <li>エコグラム失敗診断（TEGS）<span class="ib v">動画</span></li>
+          <li>色彩心理学診断<span class="ib v">動画</span></li>
+          <li>諦め前後するウッホーデータ一読析<span class="ib v">動画</span></li>
+          <li>愛され度診断</li>
+          <li>HSP診断<span class="ib v">動画</span></li>
+          <li>観力キセきき自己自采采用講座<span class="ib v">動画</span></li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🌿</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼をこじらせない思考創レッスン</div>
+        <ul class="course-items">
+          <li>恋愛後の思考セルフカウンセリング講座<span class="ib v">動画</span></li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">💕</div><div class="course-info">
+        <span class="course-tag pop">人気</span>
+        <div class="course-title">愛され体質になるための仕組み講座</div>
+        <ul class="course-items">
+          <li>インナーチャイルド癒し講座</li>
+          <li>こじらせ女子 / 恋愛的ビジョン設定講座</li>
+          <li>彼氏と私嫌の中思い講座</li>
+          <li>恋愛命令講座</li>
+          <li>共依存講座</li>
+          <li>パーソナリティスタイル講座</li>
+          <li>服装/アダルトチルドレン講座<span class="ib ex">P限定</span></li>
+          <li>自己責定感講座</li>
+          <li>自愛講座<span class="ib ex">P限定</span></li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🧘</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">状態安定・感情コントロール講座</div>
+        <ul class="course-items">
+          <li>マインドフルネス講座</li>
+          <li>東洋医学のヘッドヒーリング講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">💎</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼の心を読み解く彼トツゼツ解析講座</div>
+        <ul class="course-items">
+          <li>彼の自然防衛機能<span class="ib v">動画</span></li>
+          <li>感性別期<span class="ib t">テキスト</span></li>
+          <li>男性心理講座</li>
+          <li>恋愛感情を読み&amp;深く心理講座<span class="ib ex">P限定</span></li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">👗</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼に愛される魅せ方デザインレッスン</div>
+        <ul class="course-items">
+          <li>彼に選ばれる"魅せ方"のつくり方講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">✨</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">セルフラブで未来を創る現実想像メソッド</div>
+        <ul class="course-items">
+          <li>恋を願うセルフフィルターを外す想像レッスン</li>
+          <li>懐しい人がいなくなる シャドウレッスン</li>
+          <li>彼が生活清を手れが変える 人生鑑み合メソッド</li>
+          <li>恋を放置する 7次の課ふ手講座</li>
+          <li>彼との折あを書くための 心理的バランス講座<span class="ib ex">P限定</span></li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🔮</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼との未来を引き寄せる恋の磁道波メソッド</div>
+        <ul class="course-items">
+          <li>潜在意識講座</li>
+          <li>エネルギー（気）講座</li>
+          <li>心理学で読み解く彼の性の共鳴講座</li>
+          <li>願いの解く大講座<span class="ib ex">P限定</span></li>
+          <li>恋が叶う識識放実 言霊メソッド</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">💬</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">復縁を叶えるコミュニケーション実践講座</div>
+        <ul class="course-items">
+          <li>吉田前・仕ん方講座</li>
+          <li>LINEコミュニケーション講座<span class="ib ex">P限定</span></li>
+          <li>高跡する見所注意点講座</li>
+          <li>連絡の取れなときのNG行動講座</li>
+          <li>復縁を叶えるための実践講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🌟</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">大好きな自分になって愛される実践ワーク</div>
+        <ul class="course-items">
+          <li>切りの解放ワーク<span class="ib v">動画</span></li>
+          <li>自分様ワーク<span class="ib v">動画</span></li>
+          <li>自己責定認ワーク<span class="ib v">動画</span></li>
+          <li>なりたいリストワーク<span class="ib v">動画</span></li>
+          <li>感謝の手紙ワーク<span class="ib v">動画</span></li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🫂</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">恋愛カウンセリング＆復縁サポート</div>
+        <ul class="course-items">
+          <li>月1グループカウンセリング<span class="ib lv">LIVE</span></li>
+          <li>個別限定カウンセリング（週1）<span class="ib ex">P限定</span></li>
+          <li>インナーチャイルド カウンセリング（2回）<span class="ib ex">P限定</span></li>
+        </ul>
+      </div></div>
+
+      <div class="section-title">スペシャル特典</div>
+      <div class="benefit-card"><div class="bn">01</div><div class="be">📱</div><div><div class="bt">優先LINE相談（24h以内お返事）</div><div class="bnt">プレミアム会員専用の優先サポート</div></div></div>
+      <div class="benefit-card"><div class="bn">02</div><div class="be">📊</div><div><div class="bt">色彩心理学からわかる家族適性診断レポート</div></div></div>
+      <div class="benefit-card"><div class="bn">03</div><div class="be">📚</div><div><div class="bt">恋愛実践BOOKプレゼント</div></div></div>
+      <div class="benefit-card"><div class="bn">04</div><div class="be">🛢️</div><div><div class="bt">信頼ブレンド メモリーオイル</div><div class="bnt">プレミアム限定の特別ギフト</div></div></div>
+      <div class="benefit-card"><div class="bn">05</div><div class="be">🎉</div><div><div class="bt">対面セミナー＆交流会ご優待</div></div></div>
+      <div class="benefit-card"><div class="bn">06</div><div class="be">🎫</div><div><div class="bt">恋愛・自外看のリアルイベント参加チケット</div></div></div>
+
+      <div class="section-title">サポート</div>
+      <div class="support-card"><div class="si">👩</div><div><div class="st">担任者さんによる個別LINEサポート</div><div class="sd">専任の担任者が個別にLINEでサポートいたします</div></div></div>
+      <div class="support-card"><div class="si">💬</div><div><div class="st">サポートスタッフによるLINE相談サポート</div><div class="sd">チーム全体でバックアップします</div></div></div>
+    </div>
+
+    <div class="order-box-wrap">
+      <div class="order-box">
+        <div class="obh"><div class="obl">花恋リスタート</div><div class="obn">プレミアムプラン</div></div>
+        <div class="obb">
+          <div class="pr"><span class="prl">通常価格</span><span class="pro">¥748,000</span></div>
+          <div class="pr"><span class="prl">割引</span><span class="prd">¥50,000 OFF</span></div>
+          <div class="pr"><span class="prl">お支払い金額</span><span class="prf">¥598,000<small>（税込）</small></span></div>
+          <a class="btn-cc" href="#">💳 クレジットカード</a>
+          <a class="btn-bk" href="#">🏦 銀 行 振 込</a>
+          <div class="onote">クレジットカードは30回払いまでの分割払いが可能です。お支払い方法についてご不明点はお気軽にお問い合わせください。</div>
+          <div class="cbox">
+            <div class="ctit">総合事務局サポート</div>
+            <div class="crow"><span>✉</span><span>info@xxxxxx.com</span></div>
+            <div class="crow"><span>📞</span><span>03-1111-2222</span></div>
+            <div class="chrs">営業曜日：月曜日〜金曜日<br>営業時間：10:00〜19:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="plan-divider"></div>
+
+<!-- ============ MASTER ============ -->
+<section class="plan-section master" id="master">
+  <div class="plan-banner">
+    <div class="plan-banner-label">花恋リスタート</div>
+    <div class="plan-banner-name">マスタープラン<span class="rec-pill">★ おすすめ</span></div>
+  </div>
+  <div class="plan-inner">
+    <div>
+      <div class="section-title">メインコンテンツ</div>
+
+      <div class="course-block"><div class="course-icon">💌</div><div class="course-info">
+        <span class="course-tag new">NEW</span>
+        <div class="course-title">彼がうまくいく私のトツゼツ完成講座</div>
+        <ul class="course-items">
+          <li>彼眺めロードマップ<span class="ib v">動画</span></li>
+          <li>お目付の家庭克明なリフレッシュプレート<span class="ib t">テキスト</span></li>
+          <li>エコグラム失敗診断（TEGS）<span class="ib v">動画</span></li>
+          <li>色彩心理学診断<span class="ib v">動画</span></li>
+          <li>愛され度診断</li>
+          <li>HSP診断<span class="ib v">動画</span></li>
+          <li>観力キセきき自己自采采用講座<span class="ib v">動画</span></li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🌿</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼をこじらせない思考創レッスン</div>
+        <ul class="course-items">
+          <li>思考後の思考セルフカウンセリング講座（割引付）<span class="ib v">動画</span></li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">💕</div><div class="course-info">
+        <span class="course-tag pop">人気</span>
+        <div class="course-title">愛され体質になるための仕組み講座</div>
+        <ul class="course-items">
+          <li>インナーチャイルド癒し講座</li>
+          <li>こじらせ女子 / 恋愛的ビジョン設定講座</li>
+          <li>彼氏と私嫌の中小思い講座</li>
+          <li>恋愛の方講座</li>
+          <li>共依存講座</li>
+          <li>パーソナリティスタイル講座</li>
+          <li>服装/アダルトチルドレン講座</li>
+          <li>自己責定感講座</li>
+          <li>自愛講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🧘</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">状態安定・感情コントロール講座</div>
+        <ul class="course-items">
+          <li>マインドフルネス講座</li>
+          <li>東洋医学のヘッドビーリング講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">💎</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼の心を読み解く彼トツゼツ解析講座</div>
+        <ul class="course-items">
+          <li>彼の自的防衛機能<span class="ib v">動画</span></li>
+          <li>感性別期<span class="ib t">テキスト</span></li>
+          <li>男性心理講座</li>
+          <li>恋愛感情を読む&amp;深く心理講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">👗</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼に愛される魅せ方デザインレッスン</div>
+        <ul class="course-items">
+          <li>彼に選ばれる"魅せ方"のつくり方講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">✨</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">セルフラブで未来を創る現実想像メソッド</div>
+        <ul class="course-items">
+          <li>恋を願うセルフフィルターを外す想像レッスン</li>
+          <li>懐しい人がいなくなる シャドウレッスン</li>
+          <li>彼が生活清を手れが変える 人生鑑み合メソッド</li>
+          <li>恋を放置する 7次の課ふ手生涯</li>
+          <li>彼との折あを書くための 心理的バランス講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🔮</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼との未来を引き寄せる恋の磁道波メソッド</div>
+        <ul class="course-items">
+          <li>潜在意識講座</li>
+          <li>エネルギー（気）講座</li>
+          <li>心理学で読み解く彼の性の共鳴講座</li>
+          <li>願いの解く大講座<span class="ib exm">M限定</span></li>
+          <li>恋が叶う識識放実 言霊メソッド</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">💬</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">復縁を叶えるコミュニケーション実践講座</div>
+        <ul class="course-items">
+          <li>吉田前・仕ん方講座</li>
+          <li>LINEコミュニケーション講座</li>
+          <li>高跡する見所注意点講座</li>
+          <li>連絡の取れなときのNG行動講座</li>
+          <li>復縁を叶えるための実践講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🌟</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">大好きな自分になって愛される実践ワーク</div>
+        <ul class="course-items">
+          <li>切りの解放ワーク<span class="ib v">動画</span></li>
+          <li>自分様ワーク<span class="ib v">動画</span></li>
+          <li>自己責定認ワーク<span class="ib v">動画</span></li>
+          <li>なりたいリストワーク<span class="ib v">動画</span></li>
+          <li>感謝の手紙ワーク<span class="ib v">動画</span></li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🫂</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">恋愛カウンセリング＆復縁サポート</div>
+        <ul class="course-items">
+          <li>月1グループカウンセリング<span class="ib lv">LIVE</span></li>
+          <li>個別限定カウンセリング（週1）</li>
+        </ul>
+      </div></div>
+
+      <div class="section-title">スペシャル特典</div>
+      <div class="benefit-card"><div class="bn">01</div><div class="be">📱</div><div><div class="bt">優先LINE相談（24h以内お返事）</div></div></div>
+      <div class="benefit-card"><div class="bn">02</div><div class="be">📊</div><div><div class="bt">色彩心理学からわかる家族適性診断レポート</div></div></div>
+      <div class="benefit-card"><div class="bn">03</div><div class="be">💝</div><div><div class="bt">恋の縁を引き寄せする招待グッズ</div></div></div>
+      <div class="benefit-card"><div class="bn">04</div><div class="be">📚</div><div><div class="bt">恋愛実践BOOKプレゼント</div></div></div>
+      <div class="benefit-card"><div class="bn">05</div><div class="be">🎉</div><div><div class="bt">対面セミナー＆交流会ご招待</div></div></div>
+      <div class="benefit-card"><div class="bn">06</div><div class="be">🎫</div><div><div class="bt">恋愛・自外看のリアルイベント参加チケット</div></div></div>
+
+      <div class="section-title">サポート</div>
+      <div class="support-card"><div class="si">👩</div><div><div class="st">担任者さんによる個別LINEカウンセリング</div></div></div>
+      <div class="support-card"><div class="si">💬</div><div><div class="st">サポートスタッフによるLINE相談サポート</div></div></div>
+    </div>
+
+    <div class="order-box-wrap">
+      <div class="order-box">
+        <div class="obh"><div class="obl">花恋リスタート</div><div class="obn">マスタープラン</div></div>
+        <div class="obb">
+          <div class="pr"><span class="prl">通常価格</span><span class="pro">¥548,000</span></div>
+          <div class="pr"><span class="prl">割引</span><span class="prd">¥50,000 OFF</span></div>
+          <div class="pr"><span class="prl">お支払い金額</span><span class="prf">¥498,000<small>（税込）</small></span></div>
+          <a class="btn-cc" href="#">💳 クレジットカード</a>
+          <a class="btn-bk" href="#">🏦 銀 行 振 込</a>
+          <div class="onote">クレジットカードは30回払いまでの分割払いが可能です。お支払い方法についてご不明点はお気軽にお問い合わせください。</div>
+          <div class="cbox">
+            <div class="ctit">総合事務局サポート</div>
+            <div class="crow"><span>✉</span><span>info@xxxxxx.com</span></div>
+            <div class="crow"><span>📞</span><span>03-1111-2222</span></div>
+            <div class="chrs">営業曜日：月曜日〜金曜日<br>営業時間：10:00〜19:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="plan-divider"></div>
+
+<!-- ============ BASIC ============ -->
+<section class="plan-section basic" id="basic">
+  <div class="plan-banner">
+    <div class="plan-banner-label">花恋リスタート</div>
+    <div class="plan-banner-name">ベーシックプラン</div>
+  </div>
+  <div class="plan-inner">
+    <div>
+      <div class="section-title">メインコンテンツ</div>
+
+      <div class="course-block"><div class="course-icon">💌</div><div class="course-info">
+        <span class="course-tag new">NEW</span>
+        <div class="course-title">恋がうまくいく私のトツゼツ完成講座</div>
+        <ul class="course-items">
+          <li>彼眺めロードマップ<span class="ib v">動画</span></li>
+          <li>お目付の家庭克明なリフレッシュプレート<span class="ib t">テキスト</span></li>
+          <li>エコグラム失敗診断（TEGS）<span class="ib v">動画</span></li>
+          <li>色彩心理学診断<span class="ib v">動画</span></li>
+          <li>愛され度診断</li>
+          <li>HSP診断<span class="ib v">動画</span></li>
+          <li>観力キセきき自己自采采用講座<span class="ib v">動画</span></li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🌿</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼をこじらせない思考創レッスン</div>
+        <ul class="course-items">
+          <li>思考後の思考セルフカウンセリング講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">💕</div><div class="course-info">
+        <span class="course-tag pop">人気</span>
+        <div class="course-title">愛され体質になる心の仕組み講座</div>
+        <ul class="course-items">
+          <li>インナーチャイルド癒し講座</li>
+          <li>こじらせ女子 / 恋愛的ビジョン設定講座</li>
+          <li>彼氏と私嫌の中思い講座</li>
+          <li>恋愛命令講座</li>
+          <li>共依存講座</li>
+          <li>パーソナリティスタイル講座</li>
+          <li>服装/アダルトチルドレン講座</li>
+          <li>自己責定感講座</li>
+          <li>自愛講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🧘</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">状態安定・感情コントロール講座</div>
+        <ul class="course-items">
+          <li>マインドフルネス講座</li>
+          <li>東洋医学のヘッドビーリング講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">💎</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼の心を読み解く彼トツゼツ解析講座</div>
+        <ul class="course-items">
+          <li>彼の自的防衛機能<span class="ib v">動画</span></li>
+          <li>感性別期<span class="ib t">テキスト</span></li>
+          <li>男性心理講座</li>
+          <li>恋愛感情を読む&amp;深く心理講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">👗</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼に愛される魅せ方デザインレッスン</div>
+        <ul class="course-items">
+          <li>彼に選ばれる"魅せ方"のつくり方講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">✨</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">セルフラブで未来を創る現実想像メソッド</div>
+        <ul class="course-items">
+          <li>恋を願うセルフフィルターを外す想像レッスン</li>
+          <li>懐しい人がいなくなる シャドウレッスン</li>
+          <li>彼が生活清を手れが変える 人生鑑み合メソッド</li>
+          <li>恋を放置する 7次の課ふ手講座</li>
+          <li>彼との折あを書くための 心理的バランス講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🔮</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">彼との未来を引き寄せる恋の磁道波メソッド</div>
+        <ul class="course-items">
+          <li>潜在意識講座</li>
+          <li>エネルギー（気）講座</li>
+          <li>心理学で読み解く彼の性の共鳴講座</li>
+          <li>願いの解く大講座</li>
+          <li>恋が叶う識識放実 言霊メソッド</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">💬</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">復縁を叶えるコミュニケーション実践講座</div>
+        <ul class="course-items">
+          <li>吉田前・仕ん方講座</li>
+          <li>LINEコミュニケーション講座</li>
+          <li>高跡する見所注意点講座</li>
+          <li>連絡の取れなときのNG行動講座</li>
+          <li>復縁を叶えるための実践講座</li>
+        </ul>
+      </div></div>
+
+      <div class="course-block"><div class="course-icon">🌟</div><div class="course-info">
+        <span class="course-tag">COURSE</span>
+        <div class="course-title">大好きな自分になって愛される実践ワーク</div>
+        <ul class="course-items">
+          <li>切りの解放ワーク<span class="ib v">動画</span></li>
+          <li>自分様ワーク<span class="ib v">動画</span></li>
+          <li>自己責定認ワーク<span class="ib v">動画</span></li>
+          <li>なりたいリストワーク<span class="ib v">動画</span></li>
+          <li>感謝の手紙ワーク<span class="ib v">動画</span></li>
+        </ul>
+      </div></div>
+
+      <div class="section-title">スペシャル特典</div>
+      <div class="benefit-card"><div class="bn">01</div><div class="be">📱</div><div><div class="bt">優先LINE相談（24h以内お返事）</div></div></div>
+      <div class="benefit-card"><div class="bn">02</div><div class="be">📊</div><div><div class="bt">色彩心理学からわかる家族適性診断レポート</div></div></div>
+      <div class="benefit-card"><div class="bn">03</div><div class="be">📚</div><div><div class="bt">恋愛実践BOOKプレゼント</div></div></div>
+      <div class="benefit-card"><div class="bn">04</div><div class="be">🎉</div><div><div class="bt">対面セミナー＆交流会ご優待</div></div></div>
+      <div class="benefit-card"><div class="bn">05</div><div class="be">🎫</div><div><div class="bt">恋愛・自外看のリアルイベント参加チケット</div></div></div>
+
+      <div class="section-title">サポート</div>
+      <div class="support-card"><div class="si">👩</div><div><div class="st">担任者さんによる個別LINEカウンセリング</div></div></div>
+      <div class="support-card"><div class="si">💬</div><div><div class="st">サポートスタッフによるLINE相談サポート</div></div></div>
+    </div>
+
+    <div class="order-box-wrap">
+      <div class="order-box">
+        <div class="obh"><div class="obl">花恋リスタート</div><div class="obn">ベーシックプラン</div></div>
+        <div class="obb">
+          <div class="pr"><span class="prl">通常価格</span><span class="pro">¥348,000</span></div>
+          <div class="pr"><span class="prl">割引</span><span class="prd">¥50,000 OFF</span></div>
+          <div class="pr"><span class="prl">お支払い金額</span><span class="prf">¥298,000<small>（税込）</small></span></div>
+          <a class="btn-cc" href="#">💳 クレジットカード</a>
+          <a class="btn-bk" href="#">🏦 銀 行 振 込</a>
+          <div class="onote">クレジットカードは30回払いまでの分割払いが可能です。お支払い方法についてご不明点はお気軽にお問い合わせください。</div>
+          <div class="cbox">
+            <div class="ctit">総合事務局サポート</div>
+            <div class="crow"><span>✉</span><span>info@xxxxxx.com</span></div>
+            <div class="crow"><span>📞</span><span>03-1111-2222</span></div>
+            <div class="chrs">営業曜日：月曜日〜金曜日<br>営業時間：10:00〜19:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="#">特定商取引法</a>　<a href="#">個人情報保護方針</a>　<a href="#">プライバシーポリシー</a><br>
+  Copyright © 花恋リスタート All Rights Reserved.
+</footer>
+
+</body>
+</html>
